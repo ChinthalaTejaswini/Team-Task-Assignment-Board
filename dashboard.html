@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TaskFlow Pro Dashboard</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+            <h2>TaskFlow</h2>
+        </div>
+
+        <ul>
+
+            <li onclick="showSection('dashboardSection')">
+                <i class="fas fa-home"></i>
+                Dashboard
+            </li>
+
+            <li onclick="showSection('tasksSection')">
+                <i class="fas fa-tasks"></i>
+                Tasks
+            </li>
+
+            <li onclick="showSection('teamSection')">
+                <i class="fas fa-users"></i>
+                Team
+            </li>
+
+            <li onclick="showSection('calendarSection')">
+                <i class="fas fa-calendar"></i>
+                Calendar
+            </li>
+
+            <li onclick="showSection('reportsSection')">
+                <i class="fas fa-chart-bar"></i>
+                Reports
+            </li>
+
+            <li onclick="showSection('settingsSection')">
+                <i class="fas fa-cog"></i>
+                Settings
+            </li>
+
+        </ul>
+
+        <button class="logout-btn" onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+
+    <!-- MAIN -->
+
+    <div class="main">
+
+        <!-- TOPBAR -->
+
+        <div class="topbar">
+
+            <h1>Team Task Assignment Board</h1>
+
+            <div class="top-actions">
+
+                <input
+                type="text"
+                id="searchTask"
+                placeholder="Search Task">
+
+                <button onclick="toggleTheme()">
+                    🌙 Theme
+                </button>
+
+                <button onclick="openProfile()">
+                    👤 Profile
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- DASHBOARD SECTION -->
+
+        <div id="dashboardSection" class="section">
+
+            <div class="cards">
+
+                <div class="card">
+                    <h2 id="totalMembers">0</h2>
+                    <p>Members</p>
+                </div>
+
+                <div class="card">
+                    <h2 id="totalTasks">0</h2>
+                    <p>Tasks</p>
+                </div>
+
+                <div class="card">
+                    <h2 id="progressTasks">0</h2>
+                    <p>In Progress</p>
+                </div>
+
+                <div class="card">
+                    <h2 id="completedTasks">0</h2>
+                    <p>Completed</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- TEAM SECTION -->
+
+        <div id="teamSection" class="section">
+
+            <div class="section-header">
+
+                <h2>Team Members</h2>
+
+                <button onclick="addMember()">
+                    + Add Member
+                </button>
+
+            </div>
+
+            <div
+            id="memberList"
+            class="member-list">
+
+            </div>
+
+        </div>
+
+        <!-- TASK SECTION -->
+
+        <div id="tasksSection" class="section">
+
+            <div class="section-header">
+
+                <h2>Task Board</h2>
+
+                <button onclick="addTask()">
+                    + Add Task
+                </button>
+
+            </div>
+
+            <div class="board">
+
+                <!-- TODO -->
+
+                <div class="column">
+
+                    <h3>To Do</h3>
+
+                    <div
+                    id="todo"
+                    class="task-column"
+                    ondrop="drop(event)"
+                    ondragover="allowDrop(event)">
+                    </div>
+
+                </div>
+
+                <!-- PROGRESS -->
+
+                <div class="column">
+
+                    <h3>In Progress</h3>
+
+                    <div
+                    id="progress"
+                    class="task-column"
+                    ondrop="drop(event)"
+                    ondragover="allowDrop(event)">
+                    </div>
+
+                </div>
+
+                <!-- REVIEW -->
+
+                <div class="column">
+
+                    <h3>Review</h3>
+
+                    <div
+                    id="review"
+                    class="task-column"
+                    ondrop="drop(event)"
+                    ondragover="allowDrop(event)">
+                    </div>
+
+                </div>
+
+                <!-- COMPLETED -->
+
+                <div class="column">
+
+                    <h3>Completed</h3>
+
+                    <div
+                    id="completed"
+                    class="task-column"
+                    ondrop="drop(event)"
+                    ondragover="allowDrop(event)">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- CALENDAR SECTION -->
+
+        <div
+        id="calendarSection"
+        class="section"
+        style="display:none;">
+
+            <h2>Calendar</h2>
+
+            <div class="feature-box">
+
+                <input type="date">
+
+            </div>
+
+        </div>
+
+        <!-- REPORT SECTION -->
+
+        <div
+        id="reportsSection"
+        class="section"
+        style="display:none;">
+
+            <h2>Reports</h2>
+
+            <div class="feature-box">
+
+                <p>Total Members:
+                    <span id="reportMembers">
+                        0
+                    </span>
+                </p>
+
+                <p>Total Tasks:
+                    <span id="reportTasks">
+                        0
+                    </span>
+                </p>
+
+                <p>Completed Tasks:
+                    <span id="reportCompleted">
+                        0
+                    </span>
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- SETTINGS SECTION -->
+
+        <div
+        id="settingsSection"
+        class="section"
+        style="display:none;">
+
+            <h2>Settings</h2>
+
+            <div class="feature-box">
+
+                <button onclick="toggleTheme()">
+                    Toggle Dark / Light Mode
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- PROFILE POPUP -->
+
+<div id="profileModal" class="modal">
+
+    <div class="modal-content">
+
+        <span
+        class="close"
+        onclick="closeProfile()">
+            &times;
+        </span>
+
+        <h2>User Profile</h2>
+
+        <p id="profileName"></p>
+
+        <p id="profileEmail"></p>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
